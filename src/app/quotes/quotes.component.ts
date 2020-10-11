@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { QuotesService } from './quotes.service';
 import { Quote } from './quote';
 
@@ -13,7 +13,14 @@ export class QuotesComponent implements OnInit {
 
   quotes: Observable<Quote[]>;
 
+  loadingSubject: BehaviorSubject<boolean>;
+loading=true;
+
   ngOnInit(): void {
     this.quotes = this._quotesService.getQuotes();
+    this.loadingSubject = this._quotesService.isLoading();
+    this.loadingSubject.subscribe(val=>this.loading=val)
+    console.log(this.loading)
   }
+
 }

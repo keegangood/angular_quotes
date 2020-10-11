@@ -1,6 +1,16 @@
-<div *ngIf="quotes | async else noData">
-    <div *ngFor="let quote of quotes | async">
-        {{quote}}
+<div class="jumbotron">
+    <div *ngIf="loading">
+        <h2 class="text-center">
+
+            Loading Quotes...
+        </h2>
     </div>
+    <div *ngIf="quotes | async; else noData">
+      <app-quote-item
+        *ngFor="let quote of quotes | async"
+        [quote]="quote"
+      ></app-quote-item>
+    </div>
+    <ng-template #noData>No quotes found!</ng-template>
 </div>
-<ng-template #noData>No quotes found!</ng-template>
+
