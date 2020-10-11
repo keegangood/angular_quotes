@@ -2,7 +2,7 @@
     <div *ngIf="loading">
         <h2 class="text-center">
 
-            Loading Quotes...
+            <app-spinner></app-spinner>
         </h2>
     </div>
     <div *ngIf="quotes | async; else noData">
