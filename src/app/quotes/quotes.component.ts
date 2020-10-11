@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { QuotesService } from './quotes.service';
+import { Quote } from './quote';
 
 @Component({
   selector: 'app-quotes',
@@ -9,10 +11,9 @@ import { QuotesService } from './quotes.service';
 export class QuotesComponent implements OnInit {
   constructor(private _quotesService: QuotesService) {}
 
-  quotes: any;
+  quotes: Observable<Quote[]>;
 
   ngOnInit(): void {
     this.quotes = this._quotesService.getQuotes();
-    console.log(this.quotes);
   }
 }

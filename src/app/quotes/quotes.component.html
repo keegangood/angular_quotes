@@ -1,1 +1,6 @@
-<p>quotes works!</p>
+<div *ngIf="quotes | async else noData">
+    <div *ngFor="let quote of quotes | async">
+        {{quote}}
+    </div>
+</div>
+<ng-template #noData>No quotes found!</ng-template>
