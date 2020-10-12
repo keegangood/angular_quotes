@@ -1,14 +1,27 @@
 <div class="p-5" id="searchbox">
-    <form>
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search Quotes">
-            <div class="form-check form-check-inline">
-                <div *ngFor="let option of searchOptions" class="m-2">
-                    <input type="radio" class="form-check-input" id="searchOption" name="{{option.name}}">
-                    <label for="">{{option | titlecase}}</label>
-                </div>
-            </div>
+  <form>
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="query.text"
+        placeholder="Search Quotes"
+        name="text"
+      />
+      <div class="form-check form-check-inline">
+        <div *ngFor="let option of searchOptions; let index = i" class="m-2">
+          <input
+            type="radio"
+            class="custom-radio"
+            id="{{ option }}-radio"
+            [(ngModel)]="query.searchBy"
+            [value]="option"
+            name="searchBy"
+          />
+          <label for="{{ option }}-radio">{{ option | titlecase }} </label>
         </div>
-        <button class="btn form-control">Search</button>
-    </form>
+      </div>
+    </div>
+    <button class="btn btn-info form-control" (click)="updateQuery()">Search</button>
+  </form>
 </div>

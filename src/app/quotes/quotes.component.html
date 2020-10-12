@@ -1,16 +1,25 @@
-<div class="jumbotron">
-    <div *ngIf="loading">
+<div class="row">
+  <div class="col col-8">
+    <div class="jumbotron">
+      <div *ngIf="loading; else resultHeader">
         <h2 class="text-center">
-
-            <app-spinner></app-spinner>
+          <app-spinner></app-spinner>
         </h2>
+      </div>
+      <div *ngIf="quotes | async; else noData">
+        <app-quote-item
+          *ngFor="let quote of quotes | async"
+          [quote]="quote"
+        ></app-quote-item>
+      </div>
+      <ng-template #noData>No quotes found!</ng-template>
     </div>
-    <div *ngIf="quotes | async; else noData">
-      <app-quote-item
-        *ngFor="let quote of quotes | async"
-        [quote]="quote"
-      ></app-quote-item>
-    </div>
-    <ng-template #noData>No quotes found!</ng-template>
+  </div>
+  <div class="col col-4">
+    <app-search [query]="query" (searchQuery)="getQuotes($event)"></app-search>
+  </div>
 </div>
 
+<ng-template #resultHeader>
+    <h3 *ngIf="displayResultHeader" class="text-center">Displaying results for "{{query.text}}"</h3>
+</ng-template>

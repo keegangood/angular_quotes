@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { QuotesService } from './quotes.service';
 import { Quote } from './quote';
+import { Query } from './search/query';
 
 @Component({
   selector: 'app-quotes',
@@ -14,13 +15,21 @@ export class QuotesComponent implements OnInit {
   quotes: Observable<Quote[]>;
 
   loadingSubject: BehaviorSubject<boolean>;
-loading=true;
+  loading = true;
+  
+  query: Query = {
+    text: 'love',
+    searchBy: 'text',
+  };
 
   ngOnInit(): void {
-    this.quotes = this._quotesService.getQuotes();
+    this.quotes = this._quotesService.getQuotes(this.query);
     this.loadingSubject = this._quotesService.isLoading();
-    this.loadingSubject.subscribe(val=>this.loading=val)
-    console.log(this.loading)
+    this.loadingSubject.subscribe((val) => (this.loading = val));
   }
 
+  getQuotes(query) {
+    this.query = query;
+    this.quotes = this._quotesService.getQuotes(this.query);
+  }
 }

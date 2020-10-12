@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+
+import { Query } from './query';
 
 @Component({
   selector: 'app-search',
@@ -10,5 +13,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  searchOptions: Array<string> = ['author', 'tag'];
+  searchOptions: Array<string> = ['text', 'author', 'tag'];
+
+  @Input() query: Query;
+
+  @Output() public searchQuery = new EventEmitter();
+
+  updateQuery() {
+    this.searchQuery.emit(this.query);
+  }
+
 }
